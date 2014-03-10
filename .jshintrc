@@ -1,0 +1,38 @@
+//See all options at http://www.jshint.com/docs/options/
+{
+	"globals": {
+		"console": false,
+		"Quest": false,
+		"_": false,
+		"THREE": false,
+		"requestAnimationFrame": false,
+		"Stats": false
+	},
+	"esnext": false,
+	"globalstrict": false,
+	"quotmark": "single",
+	"smarttabs": true,
+	"trailing": false,
+	"onevar":false,
+	"bitwise":false,
+	"eqeqeq":true,
+	"forin":true,
+	"immed":true,
+	"scripturl":true,
+	"latedef":"nofunc",
+	"newcap":true,
+	"noarg":true,
+	"noempty":true,
+	"nonew":true,
+	"undef":true,
+	"white":false,
+	"unused":true,
+	"maxlen":150,
+	"browser":true,
+	"jquery":true,
+	"laxbreak":true,
+	"es3":true,
+	"maxerr":10000,
+	"indent":3,
+	"expr": true
+}
