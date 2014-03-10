@@ -1,14 +1,25 @@
 
 // Requirements
 var express = require('express'),
+	app = express(),
+	http = require('http'),
+	server = http.createServer(app),
 	logfmt = require('logfmt'),
 	consolidate = require('consolidate'),
-	handlebars = require('handlebars'),
-	app = express();
+	handlebars = require('handlebars');
 
 // App metadata (that needs to go elsewhere)
-var title = 'Leap Quest 0.1',
+var port = Number(process.env.PORT || 5000),
+	title = 'Leap Quest 0.1',
 	author = 'Don McCurdy';
+
+// Launch web server
+server.listen(port);
+console.log('Web server started on ' + port);
+
+// Launch game server
+var Server = require('./server/server.js');
+var gameServer = new Server(server);
 
 // Server configuration
 app.use(logfmt.requestLogger());
@@ -30,13 +41,3 @@ app.get('/game', function (req, res) {
 		partials: { content: 'game' }
 	});
 });
-
-// Launch web server
-var port = Number(process.env.PORT || 5000);
-app.listen(port, function() {
-  console.log('Web server started on ' + port);
-});
-
-// Launch game server
-var Server = require('./server/server.js');
-var server = new Server({port: 5050});
