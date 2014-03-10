@@ -1,0 +1,39 @@
+{
+  "name": "leap-quest",
+  "version": "0.0.1",
+  "description": "Proof-of-concept project using WebGL (via ThreeJS) and the LeapJS API.",
+  "main": "index.js",
+  "dependencies": {
+    "ws": "~0.4.31",
+    "logfmt": "~0.21.0",
+    "express": "~3.5.0",
+    "handlebars": "~2.0.0-alpha.2"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/donmccurdy/leap-quest.git"
+  },
+  "keywords": [
+    "leap",
+    "motion",
+    "webgl",
+    "threejs",
+    "javascript",
+    "html5",
+    "don",
+    "mccurdy"
+  ],
+  "author": "Don McCurdy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/donmccurdy/leap-quest/issues"
+  },
+  "homepage": "https://github.com/donmccurdy/leap-quest"
+}
