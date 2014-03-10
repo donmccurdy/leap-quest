@@ -39,8 +39,8 @@ Quest.View.prototype.initCamera = function () {
 Quest.View.prototype.initLighting = function () {
 	var light1 = new THREE.PointLight(0x888888),
 		light2 = new THREE.PointLight(0x888888);
-	light1.position.set(-100,200,100);
-	light2.position.set(50,200,-100);
+	light1.position.set(-100,100,100);
+	light2.position.set(50,100,-100);
 	this.scene.add(light1);
 	this.scene.add(light2);
 };
@@ -63,7 +63,7 @@ Quest.View.prototype.loadCharacter = function (character) {
 
 	var mesh = character.getMesh();
 	this.scene.add(mesh);
-	mesh.position.set(0,1,0);
+	mesh.position.set(0,0.8,0);
 };
 
 Quest.View.prototype.animate = function () {
