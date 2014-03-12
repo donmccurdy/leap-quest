@@ -1,2 +1,4 @@
 .DS_Store
 public/client.min
+config.sublime-workspace
+config.sublime-project
