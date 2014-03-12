@@ -18,7 +18,7 @@ server.listen(port);
 console.log('Web server started on ' + port);
 
 // Launch game server
-var Server = require('./server/server.js');
+var Server = require('./server/Server.js');
 var gameServer = new Server(server);
 
 // Server configuration

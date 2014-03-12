@@ -1,7 +1,7 @@
 /**
  * The simplest of protagonists
  */
-Quest.Character = function (options) {
+Quest.PlayerActorView = function (options) {
 	this.options = _.extend({
 		speed: 0.004,
 		bounceSpeed: 300,
@@ -12,7 +12,7 @@ Quest.Character = function (options) {
 	this.init();
 };
 
-Quest.Character.prototype.init = function () {
+Quest.PlayerActorView.prototype.init = function () {
 	var head = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1));
 	head.position.set(0,1,0);
 	var torso = new THREE.Mesh(new THREE.CubeGeometry(0.2, 1, 0.2));
@@ -30,11 +30,11 @@ Quest.Character.prototype.init = function () {
 	this.tween = null;
 };
 
-Quest.Character.prototype.getMesh = function () {
+Quest.PlayerActorView.prototype.getMesh = function () {
 	return this.mesh;
 };
 
-Quest.Character.prototype.bindEvents = function (element) {
+Quest.PlayerActorView.prototype.bindEvents = function (element) {
 	var bound = {},
 		dirMap = { 37: ['x', -1], 38: ['z', -1], 39: ['x', 1], 40: ['z',1] };
 
@@ -58,7 +58,7 @@ Quest.Character.prototype.bindEvents = function (element) {
 
 };
 
-Quest.Character.prototype.jump = function () {
+Quest.PlayerActorView.prototype.jump = function () {
 	if (this.constraints.y) return;
 
 	this.constraints.y = true;
@@ -81,7 +81,7 @@ Quest.Character.prototype.jump = function () {
 /**
  * Update state. Called once per frame.
  */
-Quest.Character.prototype.update = function (time) {
+Quest.PlayerActorView.prototype.update = function (time) {
 	var delta = this.velocity
 		.clone()
 		.setLength(time * this.options.speed);

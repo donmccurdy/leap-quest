@@ -49,19 +49,19 @@ Quest.View.prototype.initControls = function () {
 	this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
 };
 
-Quest.View.prototype.loadMap = function (map) {
-	this.map = map;
+Quest.View.prototype.loadTerrain = function (terrain) {
+	this.terrain = terrain;
 
-	var mesh = map.getMesh();
+	var mesh = terrain.getMesh();
 	mesh.position.set(0,0,0);
 	this.scene.add(mesh);
 };
 
-Quest.View.prototype.loadCharacter = function (character) {
-	this.character = character;
-	character.bindEvents(window);
+Quest.View.prototype.loadPlayer = function (player) {
+	this.player = player;
+	player.bindEvents(window);
 
-	var mesh = character.getMesh();
+	var mesh = player.getMesh();
 	this.scene.add(mesh);
 	mesh.position.set(0,0.8,0);
 };
@@ -76,7 +76,7 @@ Quest.View.prototype.animate = function () {
 	this.stats.update();
 
 	if (elapsed) {
-		this.character.update(elapsed);
+		this.player.update(elapsed);
 	}
 
 	requestAnimationFrame(_.bind(this.animate, this));

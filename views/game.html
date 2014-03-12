@@ -9,21 +9,7 @@
 	<script src="lib/Stats.js"></script>
 
 	<!-- The Game -->
-	<script src="js/view.js"></script>
-	<script src="js/map.js"></script>
-	<script src="js/character.js"></script>
-
-	<script>
-
-		view = new Quest.View(document.body, {
-			width: window.innerWidth,
-			height: window.innerHeight
-		});
-		map = new Quest.Map();
-		hero = new Quest.Character();
-
-		view.loadMap(map);
-		view.loadCharacter(hero);
-		view.animate();
-
-	</script>
+	<script src="client/view/View.js"></script>
+	<script src="client/view/zone_view/TerrainView.js"></script>
+	<script src="client/view/actor_view/PlayerActorView.js"></script>
+	<script src="client/Quest.js"></script>
