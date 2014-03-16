@@ -25,15 +25,40 @@ Self.prototype = new Actor();
 Self.prototype.constructor = Self;
 
 Self.prototype.init = function () {
-	// TODO donmccurdy use a real event!
+	// TODO donmccurdy use real events!
+	// TODO donmccurdy - zone and NPC load should be handled
+	//	by the parent zone. Derp.
+
+	// Confirm login
 	this.relay.send(_.extend(
 		{ type: 'accept-join' },
 		this.attributes
 	));
+
+	// Enter initial zone
 	this.relay.send({
-		type: 'world',
-		action: 'create'
+		type: 'zone',
+		action: 'enter-zone',
+		id: _.uniqueId('zone-')
 	});
+
+	// Load player view
+	this.relay.send({
+		type: 'zone',
+		action: 'create',
+		className: 'Player',
+		id: _.uniqueId('player-')
+	});
+
+	// Load a couple randomly-placed NPCs
+	for (var i = 0; i < 3; i++) {
+		this.relay.send({
+			type: 'zone',
+			action: 'create',
+			className: 'NPC',
+			id: _.uniqueId('npc-')
+		});
+	}
 };
 
 Self.prototype.get = function (property) {

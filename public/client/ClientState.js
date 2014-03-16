@@ -7,11 +7,11 @@ define(function () {
 	};
 
 	Self.prototype.set = function (property, value) {
-		this[property] = value;
+		this.attributes[property] = value;
 	};
 
 	Self.prototype.get = function (property) {
-		return this[property];
+		return this.attributes[property];
 	};
 
 	return Self;

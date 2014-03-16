@@ -2,7 +2,7 @@
  * The simplest of protagonists
  */
 define(['view/actor_view/ActorView'], function (Parent) {
-	var Self = function () {
+	var Self = function (attributes) {
 		Parent.apply(this, arguments);
 
 		var head = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1));
@@ -21,6 +21,10 @@ define(['view/actor_view/ActorView'], function (Parent) {
 			new THREE.MeshLambertMaterial({color: 0xf2d732})
 		);
 		this.mesh.position.set(0,0.8,0);
+
+		// TODO donmccurdy - verify it's the current user.
+		// Zone should probably handle this.
+		this.bindEvents(window);
 	};
 	Self.prototype = new Parent();
 	Self.prototype.constructor = Self;

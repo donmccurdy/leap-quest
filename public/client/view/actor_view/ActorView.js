@@ -8,6 +8,9 @@ define(function () {
 	};
 
 	var Self = function (options) {
+		options = options || {};
+
+		this.id = options.id;
 		this.options = _.extend({}, defaults, options || {});
 		this.velocity = new THREE.Vector3(0,0,0);
 		this.constraints = {};

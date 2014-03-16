@@ -22,12 +22,11 @@ define([
 		 */
 		Self.prototype.onEvent = function (event) {
 			switch (event.type) {
-				case 'world': 
+				case 'zone':
 					return this.view.trigger(event);
 				case 'system':
 					return console.log('Let\'s do stuff.');
 				case 'accept-join':
-					console.log(event);
 					return this.state.set('id', event.id);
 				default:
 					console.error('Unknown event:');

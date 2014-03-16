@@ -9,7 +9,8 @@
     "express": "~3.5.0",
     "handlebars": "~2.0.0-alpha.2",
     "consolidate": "~0.10.0",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "requirejs": "~2.1.11"
   },
   "engines": {
     "node": "0.10.x"
