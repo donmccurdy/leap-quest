@@ -2,11 +2,8 @@
 {
 	"globals": {
 		"console": false,
-		"Quest": false,
-		"_": false,
-		"THREE": false,
-		"requestAnimationFrame": false,
-		"Stats": false
+		"require": false,
+		"module": false
 	},
 	"esnext": false,
 	"globalstrict": false,
