@@ -1,43 +1,21 @@
+/**
+ * Leap Quest - Site & Game Server
+ * 
+ * Author: Don McCurdy
+ */
 
 // Requirements
-var express = require('express'),
-	app = express(),
-	http = require('http'),
-	server = http.createServer(app),
-	logfmt = require('logfmt'),
-	consolidate = require('consolidate'),
-	handlebars = require('handlebars');
-
-// App metadata (that needs to go elsewhere)
-var port = Number(process.env.PORT || 5000),
-	title = 'Leap Quest 0.1',
-	author = 'Don McCurdy';
+var express = require('express');
+var app = express();
+var http = require('http');
+var server = http.createServer(app);
 
 // Launch web server
-server.listen(port);
-console.log('Web server started on ' + port);
+server.listen(Number(process.env.PORT || 5000));
 
 // Launch game server
-var Server = require('./server/Server.js');
-var gameServer = new Server(server);
+require('./server/start')(server);
 
-// Server configuration
-app.use(logfmt.requestLogger());
-app.use(express.static('public'));
-app.set('view engine', 'html');
-app.set('views', __dirname+ '/views');
-app.engine('.html', consolidate.handlebars);
-
-// Basic routes
-app.get('/', function(req, res) {
-	res.render('layout', {
-		title: title,
-		partials: { content: 'index' }
-	});
-});
-app.get('/game', function (req, res) {
-	res.render('layout', {
-		title: title,
-		partials: { content: 'game' }
-	});
-});
+// Configuration and routes
+require('./config')(app);
+require('./routes')(app);

@@ -7,10 +7,9 @@
     "ws": "~0.4.31",
     "logfmt": "~0.21.0",
     "express": "~3.5.0",
-    "handlebars": "~2.0.0-alpha.2",
-    "consolidate": "~0.10.0",
     "lodash": "~2.4.1",
-    "requirejs": "~2.1.11"
+    "requirejs": "~2.1.11",
+    "express3-handlebars": "~0.5.0"
   },
   "engines": {
     "node": "0.10.x"
