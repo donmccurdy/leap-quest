@@ -4,11 +4,9 @@
  * Author: Don McCurdy
  */
 
-// Requirements
-var express = require('express');
-var app = express();
-var http = require('http');
-var server = http.createServer(app);
+// Express
+var app = require('express')();
+var server = require('http').createServer(app);
 var settings = require('./settings');
 
 // Launch web server
