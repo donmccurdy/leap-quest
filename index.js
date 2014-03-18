@@ -11,7 +11,7 @@ var http = require('http');
 var server = http.createServer(app);
 
 // Launch web server
-server.listen(Number(process.env.PORT || 5000));
+server.listen(process.env.PORT);
 
 // Launch game server
 require('./server/start')(server);

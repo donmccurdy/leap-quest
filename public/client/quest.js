@@ -41,6 +41,10 @@ require.config({
 		window.tweenjs = tweenjs;
 		window._ = _;
 
+		define('settings', JSON.parse(
+			document.getElementById('quest-env').innerHTML
+		));
+
 		// Load game and start
 		require(['Client'], function (Client) {
 			var client = new Client(window);

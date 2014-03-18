@@ -1,6 +1,6 @@
 define(['settings'], function (settings) {
 	var Self = function (state) {
-		this.socket = new WebSocket(settings.getSocketURL());
+		this.socket = new WebSocket(this.getSocketURL());
 		this.socket.onopen = _.bind(this.onConnect, this, state);
 		this.socket.onmessage = _.bind(this.onEvent, this);
 		this.socket.onclose = _.bind(this.onClose, this);
@@ -12,14 +12,14 @@ define(['settings'], function (settings) {
 	};
 
 	Self.prototype.onConnect = function (state) {
-		console.log('Connected to ' + settings.getSocketURL());
+		console.log('Connected to ' + this.getSocketURL());
 		this.socket.send(JSON.stringify(
 			_.extend({type: 'request-join'}, state)
 		));
 	};
 
 	Self.prototype.onClose = function () {
-		console.log('Lost connection to ' + settings.getSocketURL());
+		console.log('Lost connection to ' + this.getSocketURL());
 	};
 
 	Self.prototype.onEvent = function (event) {
@@ -30,6 +30,11 @@ define(['settings'], function (settings) {
 		_.each(this.routes.event, function (callback) {
 			callback(event);
 		});
+	};
+
+	Self.prototype.getSocketURL = function () {
+		var s = settings;
+		return s.protocol + s.host + ':' + s.port + '?v=' + s.version;
 	};
 
 	return Self;

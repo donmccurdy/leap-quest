@@ -1,3 +1,5 @@
+var settings = require('./settings');
+
 module.exports = function (app) {
 	// Homepage
 	app.get('/', function(req, res) {
@@ -6,6 +8,8 @@ module.exports = function (app) {
 
 	// Game
 	app.get('/game', function (req, res) {
-		res.render('game');
+		res.render('game', {
+			settings: JSON.stringify(settings)
+		});
 	});
 };
