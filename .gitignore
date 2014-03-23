@@ -2,3 +2,5 @@
 public/client.min
 Quest.sublime-workspace
 Quest.sublime-project
+node_modules
+npm-debug.log
