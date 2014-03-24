@@ -31,10 +31,7 @@ Server.prototype.onRemoteEvent = function (socket, context, event) {
 	
 	if (event.type === 'request-join') {
 		// On request, instantiate player.
-		context.player = new Player({
-			relay: new ServerRelay(socket),
-			state: event
-		});
+		context.player = new Player(event, new ServerRelay(socket));
 		this.world.addPlayer(context.player);
 	} else if (context.player) {
 		// Delegate other events

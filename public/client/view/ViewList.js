@@ -9,7 +9,7 @@ define(function () {
 
 	Self.prototype.push = function (obj) {
 		this._validate(obj);
-		this.hash[obj.id] = obj;
+		this.hash[obj.get('id')] = obj;
 		this.scene.add(obj.mesh);
 	};
 
@@ -40,7 +40,8 @@ define(function () {
 	};
 
 	Self.prototype._validate = function (obj) {
-		if (!obj.id) throw 'No obj ID!';
+		var id = obj.get('id');
+		if (!id) throw 'No obj ID!';
 		if (this.hash[obj.id]) throw 'Obj ID not unique!';
 	};
 

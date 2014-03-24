@@ -12,9 +12,8 @@ define(['settings'], function (settings) {
 	};
 
 	Self.prototype.onConnect = function (state) {
-		console.log('Connected to ' + this.getSocketURL());
 		this.socket.send(JSON.stringify(
-			_.extend({type: 'request-join'}, state)
+			_.extend({type: 'request-join'}, state.export())
 		));
 	};
 
@@ -23,13 +22,16 @@ define(['settings'], function (settings) {
 	};
 
 	Self.prototype.onEvent = function (event) {
-		console.log('Event Recieved!');
 		event = JSON.parse(event.data);
 		console.log(event);
 
 		_.each(this.routes.event, function (callback) {
 			callback(event);
 		});
+	};
+
+	Self.prototype.trigger = function (event) {
+		this.socket.send(JSON.stringify(event.export()));
 	};
 
 	Self.prototype.getSocketURL = function () {

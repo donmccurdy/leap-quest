@@ -7,6 +7,8 @@ define([
 
 	var Self = function (scene, options) {
 		this.id = options.id;
+		this.scene = scene;
+		this.terrain = new Terrain();
 		this.active = new ViewList(scene);
 		this.passive = new ViewList(scene);
 
@@ -14,36 +16,43 @@ define([
 	};
 
 	Self.prototype.init = function () {
-		this.passive.push(new Terrain());
+		this.scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 );
+		this.passive.push(this.terrain);
 	};
 
 	Self.prototype.trigger = function (event) {
 		if (event.action === 'create') {
 			if (event.className === 'Player') {
-				this.active.push(new Player(event));
+				this.add(new Player(event));
 			} else if (event.className === 'NPC') {
-				this.active.push(new NPC(event));
+				this.add(new NPC(event));
 			} else if (event.className === 'Object') {
 				// TODO donmccurdy - passive, active, and item objects
+				this.add(new Object(event));
 			} else {
 				console.log('Unknown classname: ' + event.className);
 			}
-		} else if (event.action === 'modify') {
-
+		} else if (event.action === 'update') {
+			var target = this.active.get(event.target);
+			if (target) {
+				event.modify(target);
+			}
 		} else if (event.action === 'remove') {
 
 		}
+	};
+
+	Self.prototype.add = function (actor) {
+		this.active.push(actor);
 	};
 
 	Self.prototype.update = function (elapsed) {
 		this.active.update(elapsed);
 	};
 
-	Self.prototype.loadPlayer = function (player) {
-		this.scene.add(player.mesh);
-		if (!this.player) player.bindEvents(window);
-		this.player = player;
-		this.active.push(player);
+	Self.prototype.intersectRay = function (ray) {
+		var intersects = ray.intersectObject(this.terrain.mesh);
+		return _.size(intersects) ? intersects[0].point : null;
 	};
 
 	return Self;

@@ -1,11 +1,16 @@
 define(function () {
 
+	var _ = _ || require('lodash');
+
 	var Self = function (attributes) {
-		this.attributes = attributes;
+		_.extend(this, attributes);
+		this.start = this.start || _.now();
 	};
 
-	Self.prototype.toJSON = function () {
-		return JSON.stringify(this.attributes);
+	Self.prototype.export = function () {
+		return _.reject(this, function (key) {
+			return _.isFunction(this[key]);
+		});
 	};
 
 	Self.prototype.update = function () {

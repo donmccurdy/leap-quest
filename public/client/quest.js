@@ -8,7 +8,10 @@ require.config({
 		
 		// Utilities
 		OrbitControls: '/lib/OrbitControls',
-		Stats: '/lib/Stats'
+		Stats: '/lib/Stats',
+
+		// Events
+		events: '/event/'
 	},
 	shim: {
 		THREE: {
@@ -47,7 +50,7 @@ require.config({
 
 		// Load game and start
 		require(['Client'], function (Client) {
-			var client = new Client(window);
+			define('LocalClient', new Client(window));
 		});
 	}
 });

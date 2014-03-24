@@ -1,5 +1,5 @@
 define(['view/actor_view/ActorView'], function (Parent) {
-	var Self = function (options) {
+	var Self = function (attributes, zone) {
 		Parent.apply(this, arguments);
 
 		this.mesh = new THREE.Mesh(
@@ -14,11 +14,10 @@ define(['view/actor_view/ActorView'], function (Parent) {
 	Self.prototype.constructor = Self;
 
 	Self.prototype.init = function () {
-		// TODO donmccurdy - this is a server-side decision.
 		this.mesh.position.set(
-			Math.random() * 50 - 25,
-			0.5,
-			Math.random() * 50 - 25
+			this.get('position').x,
+			this.get('position').y,
+			this.get('position').z
 		);
 	};
 

@@ -1,7 +1,9 @@
 define(['events/Event'], function (Event) {
 
 	var Self = function (attributes) {
-		Event.apply(this, attributes);
+		Event.apply(this, arguments);
+		this.eventClass = 'Actor';
+		this.action = actionTypeMap[this.type];
 	};
 
 	Self.prototype = new Event();
@@ -18,8 +20,8 @@ define(['events/Event'], function (Event) {
 	};
 
 	Self.prototype.modify = function (target) {
-		if (validActionTypes[this.actionType]) {
-			this[this.actionType](target);
+		if (actionTypeMap[this.type]) {
+			this[this.type](target);
 		}
 	};
 
@@ -31,41 +33,46 @@ define(['events/Event'], function (Event) {
 	 ********* Event Effects ***********
 	 ***********************************/
 
-	var validActionTypes = {
-		move: 1,
-		moveTo: 1,
-		animate: 1,
-		damage: 1,
-		say: 1,
-		attack: 1,
-		block: 1
+	var actionTypeMap = {
+		move: 'update',
+		moveTo: 'update',
+		animate: 'update',
+		damage: 'update',
+		say: 'update',
+		attack: 'update',
+		block: 'update',
+		jump: 'update'
 	};
 
-	Self.prototype.move = function () {
-
-	};
-
-	Self.prototype.moveTo = function () {
+	Self.prototype.move = function (target) {
 
 	};
 
-	Self.prototype.animate = function () {
+	Self.prototype.moveTo = function (target) {
+		target.moveTo(this.x, this.y, this.z);
+	};
+
+	Self.prototype.jump = function (target) {
+		target.jump();
+	};
+
+	Self.prototype.animate = function (target) {
 
 	};
 
-	Self.prototype.damage = function () {
+	Self.prototype.damage = function (target) {
 
 	};
 
-	Self.prototype.say = function () {
+	Self.prototype.say = function (target) {
 
 	};
 
-	Self.prototype.attack = function () {
+	Self.prototype.attack = function (target) {
 
 	};
 
-	Self.prototype.block = function () {
+	Self.prototype.block = function (target) {
 
 	};
 
