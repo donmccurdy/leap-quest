@@ -9,7 +9,10 @@ global._ = require('lodash');
 // RequireJS config
 var baseURL = __dirname;
 requirejs.config({
-	baseUrl: baseURL
+	baseUrl: baseURL,
+	paths: {
+		events: '../public/event'
+	}
 });
 
 // Export start() function

@@ -13,6 +13,7 @@ define(function () {
 			defaults,
 			_.omit(attributes, 'type')
 		);
+		this.routes = [];
 		this.init();
 	};
 
@@ -40,13 +41,22 @@ define(function () {
 		}, this.attributes);
 	};
 
+	/**
+	 * Handles events affecting *this* actor.
+	 */
 	Self.prototype.trigger = function (event) {
+		if (this.routes[event.type]) {
+			_.each(this.routes[event.type], function (cbk) {
+				cbk(event);
+			});
+		}
 		console.log(event);
-		console.log('actor-trigger');
+		event.update(this);
 		this.zone.trigger(event, this);
 	};
 
 	Self.prototype.on = function (route, callback) {
+		this.routes[route] = this.routes[route] || [];
 		this.routes[route].push(callback);
 	};
 
@@ -60,10 +70,18 @@ define(function () {
 		console.log(error);
 	};
 
+	////////////////////// EVENT INTERFACE
+
+	Self.prototype.remove = function () {
+		console.log('actor.remove() not implemented');
+	};
+
 	////////////////////// ACTOR INTERFACE
 
 	Self.prototype.moveTo = function (x, y, z) {
-		self.destination = { x: x, y: y, z: z };
+		// TODO donmccurdy use 'destination', or
+		//	tweens/delay.
+		this.set('position', { x: x, y: y, z: z });
 	}
 
 	Self.prototype.jump = function () {

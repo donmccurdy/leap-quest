@@ -28,15 +28,14 @@ define([
 		 */
 		Self.prototype.onEvent = function (event) {
 			switch (event.type) {
-				case 'zone':
-					return this.view.trigger(event);
-				case 'system':
-					return console.log('Let\'s do stuff.');
 				case 'accept-join':
 					return this.state.set('id', event.id);
+				case 'system':
+					return console.log('Let\'s do stuff.');
+				case 'zone':
 				default:
-					console.error('Unknown event:');
-					console.log(event);
+					// Rethink event definitions
+					return this.view.trigger(event);;
 			}
 		};
 

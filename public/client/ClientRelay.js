@@ -1,4 +1,8 @@
-define(['settings'], function (settings) {
+define(['settings', 'events/events'], function (settings, events) {
+
+	// TODO donmccurdy - handle automatic reconnection
+	//	and graceful failure on disconnect.
+
 	var Self = function (state) {
 		this.socket = new WebSocket(this.getSocketURL());
 		this.socket.onopen = _.bind(this.onConnect, this, state);
@@ -24,6 +28,10 @@ define(['settings'], function (settings) {
 	Self.prototype.onEvent = function (event) {
 		event = JSON.parse(event.data);
 		console.log(event);
+
+		if (event.eventClass) {
+			event = new (events[event.eventClass + 'Event'])(event);
+		}
 
 		_.each(this.routes.event, function (callback) {
 			callback(event);

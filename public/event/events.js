@@ -4,7 +4,7 @@ define([
 	'events/SystemEvent',
 	'events/QuestEvent'
 ], function (A, E, S, Q) {
-	module.exports = {
+	return {
 		ActorEvent: A,
 		EnvironmentEvent: E,
 		SystemEvent: S,

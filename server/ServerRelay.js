@@ -1,7 +1,8 @@
-define(function () {
+define(['events/events'], function (events) {
 	var Self = function (socket) {
 		this.socket = socket;
-		this.socket.on('close', _.bind(this.disconnect, this));
+		this.socket.on('message', _.bind(this._onEvent, this));
+		this.socket.on('close', _.bind(this._onDisconnect, this));
 	};
 
 	Self.prototype.send = function (event) {
@@ -16,8 +17,30 @@ define(function () {
 		});
 	};
 
-	Self.prototype.disconnect = function () {
-		console.log('disconnect whaat do i dooooo');
+	/**
+	 * Overridden by Player
+	 */
+	Self.prototype.onEvent = function () {};
+
+	/**
+	 * Private listener
+	 */
+	Self.prototype._onEvent = function (event) {
+		console.log('_onEvent');
+		try {
+			event = JSON.parse(event);
+			event = new (events[event.eventClass + 'Event'])(event);
+			this.onEvent(event);
+		} catch (error) {
+			console.log('bad event!');
+			console.log(error);
+			console.log(event);
+		}
+	};
+
+	Self.prototype.onDisconnect = function () {};
+	Self.prototype._onDisconnect = function () {
+		this.onDisconnect();
 	};
 
 	return Self;

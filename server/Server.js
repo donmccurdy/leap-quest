@@ -18,41 +18,21 @@ define([
 	 * Create new player and bind event listeners.
 	 */
 	Self.prototype.onConnect = function (socket) {
-		console.log('Client connected');
-		socket.on('message', _.bind(
-			this.onRemoteEvent, this, socket, {}));
+		socket.once('message', _.bind(this.onLogin, this, socket));
 	};
 
 	/**
-	 * Manages events coming from a client to the server.
+	 * Approve/reject login event. Realistically
+	 *	more will be necessary here.
 	 */
-	Self.prototype.onRemoteEvent = function (socket, context, event) {
-		if (!(event = this.parse(event))) return;
-		
-		if (event.type === 'request-join') {
-			// On request, instantiate player.
-			context.player = new Player(event, new ServerRelay(socket));
-			this.world.addPlayer(context.player);
-		} else if (context.player) {
-			// Delegate other events
-			context.player.trigger(event);
-		} else {
-			// Error
-			console.log('wrong event wrong time!');
-			console.log(event);
-		}
-	};
-
-	/**
-	 * Decode the event data. Conversion to a full
-	 *	Event.js object happens later.
-	 */
-	Self.prototype.parse = function (event) {
+	Self.prototype.onLogin = function (socket, event) {
 		try {
-			var parsed = JSON.parse(event);
-			return parsed;
+			if ((event = JSON.parse(event)) && event.type === 'request-join') {
+				this.world.addPlayer(new Player(event, new ServerRelay(socket)));
+			}
 		} catch (error) {
-			console.log('Ur event sucks:');
+			console.error('Ur login sucks:');
+			console.log(error);
 			console.log(event);
 		}
 	};
