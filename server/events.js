@@ -1,5 +1,3 @@
-var define = require('requirejs');
-
 define([
 	'events/ActorEvent',
 	'events/EnvironmentEvent',

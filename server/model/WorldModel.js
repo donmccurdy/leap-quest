@@ -1,28 +1,29 @@
-var Zone = require('./zone_model/ZoneModel.js');
+define(['model/zone_model/ZoneModel'], function (Zone) {
+	var Self = function () {
+		this.zones = [ new Zone() ];
+		this.players = [];
+		this.chatlog = [];
+	};
 
-var Self = module.exports = function () {
-	this.zones = [ new Zone() ];
-	this.players = [];
-	this.chatlog = [];
-};
+	Self.prototype.addPlayer = function (player) {
+		this.getZone(player).addPlayer(player);
+		this.players.push(player);
+	};
 
-Self.prototype.addPlayer = function (player) {
-	this.getZone(player).addPlayer(player);
-	this.players.push(player);
-};
+	Self.prototype.trigger = function (event) {
 
-Self.prototype.trigger = function (event) {
+	};
 
-};
+	Self.prototype.on = function () {
 
-Self.prototype.on = function () {
+	};
 
-};
+	Self.prototype.tick = function () {
 
-Self.prototype.tick = function () {
+	};
 
-};
-
-Self.prototype.getZone = function (player) {
-	return this.zones[0];
-};
+	Self.prototype.getZone = function (player) {
+		return this.zones[0];
+	};
+	return Self;
+});

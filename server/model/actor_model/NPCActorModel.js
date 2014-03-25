@@ -1,14 +1,14 @@
-var _ = require('lodash');
-var Actor = require('./ActorModel.js');
+define(['model/actor_model/ActorModel'], function (Parent) {
+	var Self = function (attributes) {
+		Parent.apply(this, arguments);
+		this.set('className', 'NPC');
+	};
 
-var Self = module.exports = function (attributes) {
-	Actor.apply(this, arguments);
-	this.set('className', 'NPC');
-};
+	Self.prototype = new Parent();
+	Self.prototype.constructor = Self;
 
-Self.prototype = new Actor();
-Self.prototype.constructor = Self;
+	Self.prototype.init = function () {
 
-Self.prototype.init = function () {
-
-};
+	};
+	return Self;
+});
