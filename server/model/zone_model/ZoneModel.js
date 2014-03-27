@@ -1,4 +1,7 @@
-define(['model/actor_model/NPCActorModel'], function (NPC) {
+define([
+	'model/actor_model/NPCActorModel',
+	'events/events'
+], function (NPC, events) {
 	var Self = function () {
 		this.id = _.uniqueId('zone-');
 		this.players = [];
@@ -26,11 +29,11 @@ define(['model/actor_model/NPCActorModel'], function (NPC) {
 	Self.prototype.addPlayer = function (player) {
 		var i, actor;
 		player.joinZone(this);
-		player.triggerRemote({
-			type: 'zone',
-			action: 'enter-zone',
+		player.triggerRemote(events.create({
+			eventClass: 'SystemEvent',
+			type: 'enter-zone',
 			id: this.id
-		});
+		}));
 		this.players.push(player);
 		for (actor, i = 0; (actor = this.players[i]); ++i) {
 			player.triggerRemote(actor.export());
@@ -38,6 +41,10 @@ define(['model/actor_model/NPCActorModel'], function (NPC) {
 		for (actor, i = 0; (actor = this.npcs[i]); ++i) {
 			player.triggerRemote(actor.export());
 		}
+	};
+
+	Self.prototype.add = function (event) {
+		console.log('zone.add(event) not implemented');
 	};
 
 	/**

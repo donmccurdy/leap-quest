@@ -23,8 +23,8 @@ define (function () {
 		var tex = THREE.ImageUtils.loadTexture('/resources/texture/terrain-01.png');
 		tex.wrapS = THREE.RepeatWrapping;
 		tex.wrapT = THREE.RepeatWrapping;
-		tex.repeat.x = 12;
-		tex.repeat.y = 12;
+		tex.repeat.x = 8;
+		tex.repeat.y = 8;
 		return window.tex = new THREE.MeshBasicMaterial({
 			map: tex
 		});

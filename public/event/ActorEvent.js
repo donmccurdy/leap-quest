@@ -2,7 +2,7 @@ define(['events/Event'], function (Event) {
 
 	var Self = function (attributes) {
 		Event.apply(this, arguments);
-		this.eventClass = 'Actor';
+		this.eventClass = 'ActorEvent';
 		this.action = actionTypeMap[this.type];
 	};
 

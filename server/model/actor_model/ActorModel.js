@@ -6,7 +6,7 @@ var defaults = {
 	jumpHeight: 2
 };
 
-define(function () {
+define(['events/events'], function (events) {
 	var Self = function (attributes) {
 		this.attributes = _.extend(
 			{},
@@ -18,7 +18,9 @@ define(function () {
 	};
 
 	Self.prototype.init = function () {};
-	Self.prototype.sync = function () {};
+	Self.prototype.sync = function () {
+		this.zone.trigger(this.export(), this);
+	};
 
 	Self.prototype.get = function (property) {
 		return this.attributes[property];
@@ -35,10 +37,10 @@ define(function () {
 	};
 
 	Self.prototype.export = function () {
-		return _.extend({
-			type: 'zone',
+		return events.create(_.extend({
+			eventClass: 'ZoneEvent',
 			action: 'create'
-		}, this.attributes);
+		}, this.attributes));
 	};
 
 	/**

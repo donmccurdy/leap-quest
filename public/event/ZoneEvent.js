@@ -2,26 +2,22 @@ define(['events/Event'], function (Event) {
 
 	var Self = function (attributes) {
 		Event.apply(this, arguments);
-		this.eventClass = 'SystemEvent';
+		this.eventClass = 'ZoneEvent';
 	};
 
 	Self.prototype = new Event();
 	Self.prototype.constructor = Self;
 
-	Self.prototype.update = function(client) {
-		this[this.type](client);
+	Self.prototype.update = function(zone) {
+		this[this.action](zone);
 	};
 
 	/***********************************
 	 ********* Event Effects ***********
 	 ***********************************/
 
-	 Self.prototype['accept-join'] = function(client) {
-	 	client.state.set('id', this.id);
-	 };
-
-	 Self.prototype['enter-zone'] = function(client) {
-	 	client.view.addZone(this);
+	 Self.prototype.create = function(zone) {
+	 	zone.add(this);
 	 };
 
 	 return Self;

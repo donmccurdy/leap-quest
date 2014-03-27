@@ -27,15 +27,10 @@ define([
 		 *	handlers.
 		 */
 		Self.prototype.onEvent = function (event) {
-			switch (event.type) {
-				case 'accept-join':
-					return this.state.set('id', event.id);
-				case 'system':
-					return console.log('Let\'s do stuff.');
-				case 'zone':
-				default:
-					// Rethink event definitions
-					return this.view.trigger(event);;
+			if (event.eventClass === 'SystemEvent') {
+				event.update(this);
+			} else {
+				this.view.trigger(event);
 			}
 		};
 

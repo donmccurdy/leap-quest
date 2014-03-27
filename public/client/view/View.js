@@ -81,9 +81,8 @@ define([
 		};
 
 		Self.prototype.trigger = function (event) {
-			if (event.action === 'enter-zone') {
-				console.log('enter zone');
-				this.zones[event.id] = new Zone(this.scene, event);
+			if (event.eventClass === 'ZoneEvent') {
+				event.update(this.getZone(event));
 			} else {
 				this.getZone(event).trigger(event);
 			}
@@ -98,6 +97,10 @@ define([
 		 */
 		Self.prototype.getZone = function (event) {
 			return _.find(this.zones, function () { return 1; });
+		};
+
+		Self.prototype.addZone = function (event) {
+			this.zones[event.id] = new Zone(this.scene, event);
 		};
 
 		/**

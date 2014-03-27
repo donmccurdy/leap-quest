@@ -26,15 +26,15 @@ define([
 	 *	more will be necessary here.
 	 */
 	Self.prototype.onLogin = function (socket, event) {
-		try {
+		// try {
 			if ((event = JSON.parse(event)) && event.type === 'request-join') {
 				this.world.addPlayer(new Player(event, new ServerRelay(socket)));
 			}
-		} catch (error) {
-			console.error('Ur login sucks:');
-			console.log(error);
-			console.log(event);
-		}
+		// } catch (error) {
+		// 	console.error('Ur login sucks:');
+		// 	console.log(error);
+		// 	console.log(event);
+		// }
 	};
 
 	return Self;

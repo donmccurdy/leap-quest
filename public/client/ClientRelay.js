@@ -28,11 +28,7 @@ define(['settings', 'events/events'], function (settings, events) {
 	Self.prototype.onEvent = function (event) {
 		event = JSON.parse(event.data);
 		console.log(event);
-
-		if (event.eventClass) {
-			event = new (events[event.eventClass + 'Event'])(event);
-		}
-
+		event = events.create(event);
 		_.each(this.routes.event, function (callback) {
 			callback(event);
 		});

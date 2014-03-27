@@ -2,8 +2,9 @@ define([
 	'view/zone_view/TerrainView',
 	'view/actor_view/NPCActorView',
 	'view/actor_view/PlayerActorView',
-	'view/ViewList'
-	], function (Terrain, NPC, Player, ViewList) {
+	'view/ViewList',
+	'view/views'
+	], function (Terrain, NPC, Player, ViewList, views) {
 
 	var Self = function (scene, options) {
 		this.id = options.id;
@@ -21,29 +22,19 @@ define([
 	};
 
 	Self.prototype.trigger = function (event) {
-		if (event.action === 'create') {
-			if (event.className === 'Player') {
-				this.add(new Player(event));
-			} else if (event.className === 'NPC') {
-				this.add(new NPC(event));
-			} else if (event.className === 'Object') {
-				// TODO donmccurdy - passive, active, and item objects
-				this.add(new Object(event));
-			} else {
-				console.log('Unknown classname: ' + event.className);
-			}
-		} else if (event.action === 'update') {
+		if (event.eventClass === 'ActorEvent') {
 			var target = this.active.get(event.target);
 			if (target) {
 				event.modify(target);
 			}
-		} else if (event.action === 'remove') {
-
+		} else {
+			console.error('Zone doesn\'t know what to do with event:');
+			console.log(event);
 		}
 	};
 
-	Self.prototype.add = function (actor) {
-		this.active.push(actor);
+	Self.prototype.add = function (event) {
+		this.active.push(views.create(event));
 	};
 
 	Self.prototype.update = function (elapsed) {

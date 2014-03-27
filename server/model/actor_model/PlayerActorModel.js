@@ -1,7 +1,10 @@
-define(['model/actor_model/ActorModel'], function (Parent) {
+define([
+	'model/actor_model/ActorModel',
+	'events/events'
+], function (Parent, events) {
 	var Self = function (attributes, relay) {
 		Parent.apply(this, arguments);
-		this.set('className', 'Player');
+		this.set('className', 'PlayerActor');
 		this.relay = relay;
 		this.relay.onEvent = _.bind(this.trigger, this);
 		this.relay.onDisconnect = _.bind(function () {
@@ -24,10 +27,13 @@ define(['model/actor_model/ActorModel'], function (Parent) {
 		Parent.prototype.joinZone.apply(this, arguments);
 
 		// Confirm login
-		this.relay.send(_.extend(
-			{type: 'accept-join'},
+		this.relay.send(events.create(_.extend(
+			{
+				eventClass: 'SystemEvent',
+				type: 'accept-join'
+			},
 			this.attributes
-		));
+		)));
 	};
 
 	Self.prototype.triggerRemote = function (event) {

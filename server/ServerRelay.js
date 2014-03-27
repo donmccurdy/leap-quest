@@ -29,7 +29,7 @@ define(['events/events'], function (events) {
 		console.log('_onEvent');
 		try {
 			event = JSON.parse(event);
-			event = new (events[event.eventClass + 'Event'])(event);
+			event = events.create(event);
 			this.onEvent(event);
 		} catch (error) {
 			console.log('bad event!');

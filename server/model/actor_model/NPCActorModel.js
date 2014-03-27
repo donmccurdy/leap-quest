@@ -1,7 +1,7 @@
 define(['model/actor_model/ActorModel'], function (Parent) {
 	var Self = function (attributes) {
 		Parent.apply(this, arguments);
-		this.set('className', 'NPC');
+		this.set('className', 'NPCActor');
 	};
 
 	Self.prototype = new Parent();
