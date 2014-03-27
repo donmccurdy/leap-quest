@@ -1,7 +1,7 @@
 Leap Quest [![stillmaintained](http://stillmaintained.com/donmccurdy/leap-quest.png)](http://stillmaintained.com/donmccurdy/leap-quest)
 ==========
 
-Multiplayer browser-based micro-RPG written entirely in JavaScript. Proudly built on:
+Multiplayer Micro-RPG written entirely in JavaScript. Proudly built on:
 
 * WebGL + [THREE.js](http://threejs.org/)
 * WebSockets + [ws](http://einaros.github.io/ws/)
