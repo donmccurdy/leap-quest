@@ -1,12 +1,14 @@
 define([
+	'model/ModelList',
 	'model/actor_model/NPCActorModel',
+	'model/models',
 	'events/events'
-], function (NPC, events) {
+], function (ModelList, NPC, models, events) {
 	var Self = function () {
 		this.id = _.uniqueId('zone-');
-		this.players = [];
-		this.npcs = [];
-		this.objects = [];
+		this.objects = new ModelList();
+		this.players = new ModelList();
+		this.npcs = new ModelList();
 		this.terrain = null;
 		this.init();
 	};
@@ -26,25 +28,31 @@ define([
 		}
 	};
 
-	Self.prototype.addPlayer = function (player) {
-		var i, actor;
-		player.joinZone(this);
+	Self.prototype.add = function (event) {
+		// TODO donmccurdy - is it really necessary
+		// 	to separate different model types?
+		var player = models.create(event);
+		// TODO donmccurdy - not adding NPCs yet.
 		player.triggerRemote(events.create({
 			eventClass: 'SystemEvent',
-			type: 'enter-zone',
+			type: 'load-zone',
 			id: this.id
 		}));
+		player.joinZone(this);
+		
+		// TODO donmccurdy - a bit silly not to
+		// 	publish the new guy to the existing
+		// 	players here. (see actor.sync())
+		this.players.export(player);
+		this.npcs.export(player);
+		
 		this.players.push(player);
-		for (actor, i = 0; (actor = this.players[i]); ++i) {
-			player.triggerRemote(actor.export());
-		}
-		for (actor, i = 0; (actor = this.npcs[i]); ++i) {
-			player.triggerRemote(actor.export());
-		}
 	};
 
-	Self.prototype.add = function (event) {
-		console.log('zone.add(event) not implemented');
+	Self.prototype.remove = function (event) {
+		var model = this.npcs.pop(event.id)
+			|| this.players.pop(event.id);
+		this.players.triggerRemote(event);
 	};
 
 	/**
@@ -52,12 +60,7 @@ define([
 	 *	the (optional) source.
 	 */
 	Self.prototype.trigger = function (event, source) {
-		source = source && source.get('id');
-		for (var other, i = 0; (other = this.players[i]); ++i) {
-			if (source && other.get('id') !== source) {
-				other.triggerRemote(event);
-			}
-		}
+		this.players.triggerRemote(event, source);
 	};
 
 	Self.prototype.on = function () {

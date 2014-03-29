@@ -3,7 +3,9 @@
 	"globals": {
 		"console": false,
 		"require": false,
-		"module": false
+		"module": false,
+		"define": false,
+		"_": false
 	},
 	"esnext": false,
 	"globalstrict": false,

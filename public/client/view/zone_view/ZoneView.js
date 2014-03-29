@@ -24,9 +24,7 @@ define([
 	Self.prototype.trigger = function (event) {
 		if (event.eventClass === 'ActorEvent') {
 			var target = this.active.get(event.target);
-			if (target) {
-				event.modify(target);
-			}
+			if (target) event.update(target);
 		} else {
 			console.error('Zone doesn\'t know what to do with event:');
 			console.log(event);
@@ -35,6 +33,10 @@ define([
 
 	Self.prototype.add = function (event) {
 		this.active.push(views.create(event));
+	};
+
+	Self.prototype.remove = function (event) {
+		this.active.pop(event.id);
 	};
 
 	Self.prototype.update = function (elapsed) {

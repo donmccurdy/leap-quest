@@ -9,6 +9,7 @@ define(['events/Event'], function (Event) {
 	Self.prototype.constructor = Self;
 
 	Self.prototype.update = function(zone) {
+		console.log(this);
 		this[this.action](zone);
 	};
 
@@ -18,6 +19,10 @@ define(['events/Event'], function (Event) {
 
 	 Self.prototype.create = function(zone) {
 	 	zone.add(this);
+	 };
+
+	 Self.prototype.remove = function(zone) {
+	 	zone.remove(this);
 	 };
 
 	 return Self;

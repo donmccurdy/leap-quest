@@ -2,14 +2,9 @@ define([
 	'model/actor_model/ActorModel',
 	'events/events'
 ], function (Parent, events) {
-	var Self = function (attributes, relay) {
+	var Self = function (attributes) {
 		Parent.apply(this, arguments);
 		this.set('className', 'PlayerActor');
-		this.relay = relay;
-		this.relay.onEvent = _.bind(this.trigger, this);
-		this.relay.onDisconnect = _.bind(function () {
-			console.log(this.get('name')  + ' has disconnected.');
-		}, this);
 	};
 
 	Self.prototype = new Parent();
@@ -17,6 +12,18 @@ define([
 
 	Self.prototype.init = function () {
 		Parent.prototype.init.apply(this);
+
+		this.relay = this.get('relay');
+		this.set('relay', 0);
+		this.relay.onEvent = _.bind(this.trigger, this);
+		this.relay.onDisconnect = _.bind(function () {
+			var removeEvent = events.create({
+				eventClass: 'ZoneEvent',
+				action: 'remove',
+				id: this.get('id')
+			});
+			removeEvent.update(this.zone);
+		}, this);
 
 		this.on('death', _.bind(function () {
 			console.log(this.get('name')  + ' has died!');

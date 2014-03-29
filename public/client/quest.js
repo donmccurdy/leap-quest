@@ -9,6 +9,7 @@ require.config({
 		// Utilities
 		OrbitControls: '/lib/OrbitControls',
 		Stats: '/lib/Stats',
+		util: '/util/',
 
 		// Events
 		events: '/event/'

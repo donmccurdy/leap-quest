@@ -11,7 +11,8 @@ var baseURL = __dirname;
 requirejs.config({
 	baseUrl: baseURL,
 	paths: {
-		events: '../public/event'
+		events: '../public/event',
+		'public': '../public'
 	}
 });
 

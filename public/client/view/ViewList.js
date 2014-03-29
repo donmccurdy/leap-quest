@@ -1,33 +1,31 @@
 /**
  * ViewList: Utility collection for View objects.
  */
-define(function () {
+define(['util/AbstractList'], function (Parent) {
 	var Self = function (scene) {
+		Parent.apply(this, arguments);
 		this.scene = scene;
-		this.hash = {};
 	};
 
+	Self.prototype = new Parent();
+	Self.prototype.constructor = Self;
+
 	Self.prototype.push = function (obj) {
-		this._validate(obj);
-		this.hash[obj.get('id')] = obj;
+		Parent.prototype.push.apply(this, arguments);
 		this.scene.add(obj.mesh);
 	};
 
-	Self.prototype.get = function (id) {
-		return this.hash[id];
-	}
-
 	Self.prototype.pop = function (id) {
-		var obj = this.hash[id];
-		delete this.hash[id];
-		// TODO donmccurdy - remove mesh from scene
+		var obj = Parent.prototype.pop.apply(this, arguments);
+		this.scene.remove(obj.mesh);
 		return obj;
 	};
 
 	Self.prototype.unload = function () {
-		var hash = this.hash;
-		this.hash = {};
-		// TODO donmccurdy - remove all from scene
+		var hash = Parent.prototype.unload.apply(this, arguments);
+		_.each(hash, _.bind(function (obj) {
+			this.scene.remove(obj.mesh);
+		}, this));
 		return hash;
 	};
 
@@ -37,12 +35,6 @@ define(function () {
 				this.hash[id].update(elapsed);
 			}
 		}
-	};
-
-	Self.prototype._validate = function (obj) {
-		var id = obj.get('id');
-		if (!id) throw 'No obj ID!';
-		if (this.hash[obj.id]) throw 'Obj ID not unique!';
 	};
 
 	return Self;

@@ -2,8 +2,8 @@ define([
 	'ws',
 	'ServerRelay',
 	'model/WorldModel',
-	'model/actor_model/PlayerActorModel'
-], function (ws, ServerRelay, World, Player) {
+	'events/events'
+], function (ws, ServerRelay, World, events) {
 	var Self = function (server) {
 		this.ws = new ws.Server({server: server});
 		this.world = new World();
@@ -26,15 +26,20 @@ define([
 	 *	more will be necessary here.
 	 */
 	Self.prototype.onLogin = function (socket, event) {
-		// try {
-			if ((event = JSON.parse(event)) && event.type === 'request-join') {
-				this.world.addPlayer(new Player(event, new ServerRelay(socket)));
-			}
-		// } catch (error) {
-		// 	console.error('Ur login sucks:');
-		// 	console.log(error);
-		// 	console.log(event);
-		// }
+		if ((event = JSON.parse(event)) && event.type === 'request-join') {
+
+			// Spawn player
+			event = events.create(_.merge({
+				eventClass: 'ZoneEvent',
+				className: 'PlayerActor',
+				action: 'create',
+				relay: new ServerRelay(socket)
+			}, event));
+
+			// Update zone
+			event.update(this.world.getZone(event));
+
+		}
 	};
 
 	return Self;

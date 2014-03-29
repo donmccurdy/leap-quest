@@ -20,7 +20,7 @@ define(['events/Event'], function (Event) {
 	 	client.state.set('id', this.id);
 	 };
 
-	 Self.prototype['enter-zone'] = function(client) {
+	 Self.prototype['load-zone'] = function(client) {
 	 	client.view.addZone(this);
 	 };
 
