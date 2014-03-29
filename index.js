@@ -10,7 +10,7 @@ var server = require('http').createServer(app);
 var settings = require('./settings');
 
 // Launch web server
-server.listen(process.env.PORT || settings.QUEST_PORT);
+server.listen(process.env.PORT || settings.port);
 
 // Launch game server
 require('./server/start')(server);

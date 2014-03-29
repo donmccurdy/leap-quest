@@ -7,6 +7,11 @@ var env = process.env;
  *	should remain in process.env.
  */
 
+// Load .env if it's missing (for node-inspector)
+if (!env.QUEST_ENV) {
+	var dotenv = new (require('dotenv-node'))();
+}
+
 // Global environment
 var settings = module.exports = {
 	env:		env.QUEST_ENV,
