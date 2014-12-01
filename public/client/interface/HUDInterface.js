@@ -2,21 +2,30 @@ define([
 	'interface/Interface',
 	'events/ActorEvent'
 ], function (Parent, ActorEvent) {
+
+	var DEBOUNCE = 300;
+
 	var Self = function () {
 		Parent.apply(this, arguments);
+		this.mouseLock = false;
 	};
 
 	Self.prototype = new Parent();
 	Self.prototype.constructor = Self;
 
+	/**
+	 * TODO donmccurdy - add HUD element.
+	 */
 	Self.prototype.init = function () {
-		// TODO donmccurdy - add HUD element.
-
+		this.el.addEventListener('mousedown', _.bind(this.toggleLock, this, false));
+		this.el.addEventListener('mousemove', _.bind(this.toggleLock, this, true));
 		this.el.addEventListener('click', _.bind(this.onClick, this));
-		this.el.addEventListener('resize', _.debounce(
-			_.bind(this.onResize, this), 300
-		));
+		this.el.addEventListener('resize', _.debounce(_.bind(this.onResize, this), DEBOUNCE));
 		this.onResize();
+	};
+
+	Self.prototype.toggleLock = function (locked) {
+		this.mouseLock = locked;
 	};
 
 	/**
@@ -24,6 +33,8 @@ define([
 	 *	on the UI chrome, then terrain.
 	 */
 	Self.prototype.onClick = function (e) {
+		if (this.mouseLock) return;
+
 		var v = this.client.view.intersectScreen(
 			(e.clientX / this.innerWidth) * 2 - 1,
 			-(e.clientY / this.innerHeight) * 2 + 1
