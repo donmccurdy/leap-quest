@@ -1,12 +1,23 @@
-define (function () {
+define ([
+	'THREEx'
+	], function (THREEx) {
+
+	var TILE_WIDTH = 50;
+	var TILE_HEIGHT = 0.5;
+	var TUFT_COUNT = 1000;
+	var TUFT_SCALE = 3.0;
+
+	THREEx.createGrassTufts.baseUrl = 'bower_components/threex.grass/';
+
 	var Self = function (attributes) {
 		this.attributes = _.extend(attributes || {}, {
 			id: _.uniqueId('terrain-')
 		});
 		this.mesh = new THREE.Mesh(
-			new THREE.CubeGeometry( 50, 0.5, 50 ),
+			new THREE.CubeGeometry( TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH ),
 			this.loadTexture()
 		);
+		this.props = this.loadProps();
 		this.init();
 	};
 
@@ -30,7 +41,22 @@ define (function () {
 		});
 	};
 
+	Self.prototype.loadProps = function () {
+		var tufts, coords	= new Array(TUFT_COUNT);
+		for(var i = 0; i < TUFT_COUNT; i++){
+			coords[i] = new THREE.Vector3(
+				(Math.random() - 0.5) * TILE_WIDTH / TUFT_SCALE,
+				0.25 / TUFT_SCALE,
+				(Math.random() - 0.5) * TILE_WIDTH / TUFT_SCALE
+			);
+		}
+		tufts = new THREEx.createGrassTufts(coords);
+		tufts.scale.set(TUFT_SCALE, TUFT_SCALE, TUFT_SCALE);
+		return tufts;
+	};
+
 	Self.prototype.init = function () {
+		this.mesh.add(this.props);
 		this.mesh.position.set(0,0,0);
 	};
 

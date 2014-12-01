@@ -21,6 +21,7 @@
     "createjs-tweenjs": "*",
     "lodash": "~2.4.1",
     "requirejs": "~2.1.11",
-    "threejs": "*"
+    "threejs": "*",
+    "threex.grass": "*"
   }
 }

@@ -10,6 +10,7 @@ require.config({
 		OrbitControls: '/lib/OrbitControls',
 		Stats: '/lib/Stats',
 		util: '/util/',
+		THREEx: '/bower_components/threex.grass/threex.grass',
 
 		// Events
 		events: '/event/'
@@ -17,6 +18,9 @@ require.config({
 	shim: {
 		THREE: {
 			exports: 'window.THREE'
+		},
+		THREEx: {
+			exports: 'THREEx'
 		},
 		tweenjs: {
 			exports: 'Tween',

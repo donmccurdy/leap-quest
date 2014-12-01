@@ -1,3 +1,4 @@
 public/client.min
+public/bower_components
 node_modules
 npm-debug.log

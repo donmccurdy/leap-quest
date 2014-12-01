@@ -6,6 +6,8 @@ define([
 		'Stats'
 	], function (Zone) {
 
+		var EPS = 0.05;
+
 		var Self = function (element, options) {
 			options = options || {};
 			this.element = element;
@@ -54,12 +56,13 @@ define([
 		};
 
 		Self.prototype.initControls = function () {
-			this.paintable.push(
-				new THREE.OrbitControls(
-					this.camera,
-					this.renderer.domElement
-				)
+			var controls = new THREE.OrbitControls(
+				this.camera,
+				this.renderer.domElement
 			);
+			controls.minPolarAngle = Math.PI / 4.0;
+			controls.maxPolarAngle = Math.PI / 2.0 - EPS;
+			this.paintable.push(controls);
 		};
 
 		Self.prototype.intersectScreen = function (mouseX, mouseY) {
