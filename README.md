@@ -1,4 +1,4 @@
-Leap Quest [![stillmaintained](http://stillmaintained.com/donmccurdy/leap-quest.png)](http://stillmaintained.com/donmccurdy/leap-quest)
+Leap Quest
 ==========
 
 Multiplayer Micro-RPG written entirely in JavaScript. Proudly built on:
